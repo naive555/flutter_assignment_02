@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_assignment_02/NewTodoListScreen.dart';
 
 class TodoScreen extends StatefulWidget {
  @override
@@ -8,7 +9,7 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoState extends State<TodoScreen> {
-
+  int _index = 0;
  @override
  Widget build(BuildContext context) {
    return Scaffold(
@@ -16,12 +17,15 @@ class _TodoState extends State<TodoScreen> {
        title: Text('Todo'),
        actions: <Widget>[
           new IconButton(icon: new Icon(Icons.add),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => NewTodoListScreen()));
+              },
             ),
          ],
      ),
      bottomNavigationBar: BottomNavigationBar(
-       currentIndex: 1, // this will be set when a new tab is tapped
+       currentIndex: _index, // this will be set when a new tab is tapped
        items: [
          BottomNavigationBarItem(
            icon: new Icon(Icons.list),
@@ -32,6 +36,11 @@ class _TodoState extends State<TodoScreen> {
            title: new Text('Complete'),
          ),
        ],
+       onTap: (int index) {
+          setState(() {
+            _index = index;
+          });
+        },
      ),
    );
  }

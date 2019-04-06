@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_assignment_02/NewTodoListScreen.dart';
 import 'package:flutter_assignment_02/TodoScreen.dart';
 
 void main() => runApp(MyApp());
@@ -21,10 +22,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       // home: MyHomePage(title: 'Todo'),
       initialRoute: "/",
       routes: {
         "/": (context) => TodoScreen(),
+        "/newTodoList": (context) => NewTodoListScreen(),
       },
     );
   }
