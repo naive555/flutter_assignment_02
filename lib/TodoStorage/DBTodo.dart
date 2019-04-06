@@ -13,7 +13,7 @@ class Todo {
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       columnTitle: title,
-      columnDone: done == true ? 1:0
+      columnDone: done
     };
     if(id != null) {
       map[columnId] = id;
@@ -21,7 +21,7 @@ class Todo {
     return map;
   }
 
-  Todo();
+  Todo({this.id, this.title, this.done});
 
   Todo.fromMap(Map<String, dynamic> map) {
     id = map[columnId];
@@ -32,8 +32,8 @@ class Todo {
 
 class TodoProvider {
   Database db;
-
-  Future open(String, path) async {
+  
+  Future open(String path) async {
     db = await openDatabase(path, version: 1, onCreate: (Database db, int version) async{
       await db.execute(
         '''create table $tableTodo (
@@ -45,8 +45,8 @@ class TodoProvider {
     });
   }
 
-  Future<Todo> insert(Todo, todo) async {
-    todo.id = await db.insert(tableTodo, todo.toMap());
+  Future<Todo> insert(Todo todo) async {
+        todo.id = await db.insert(tableTodo, todo.toMap());
     return todo;
   }
 
@@ -61,13 +61,30 @@ class TodoProvider {
     return null;
   }
 
+  Future<List<Todo>> getAllTodo() async {
+    var todo = await db.query(tableTodo,
+        where: '$columnDone = 0');
+    return todo.map((maps) => Todo.fromMap(maps)).toList();
+  }
+
+  Future<List<Todo>> getAllDone() async{
+    var todo = await db.query(tableTodo,
+        where: '$columnDone = 1');
+    return todo.map((maps) => Todo.fromMap(maps)).toList();
+  }
+
+  Future<void> deleteAllDone() async{
+    await db.delete(tableTodo,
+    where: '$columnDone = 1');
+  }
+
   Future<int> delete(int id) async{
     return await db.delete(tableTodo,
         where: "$columnId = ?",
         whereArgs: [id]);
   }
 
-  Future<int> update(Todo, todo) async{
+  Future<int> update(Todo todo) async{
     return await db.update(tableTodo, todo.toMap(),
       where: "$columnId = ?",
       whereArgs: [todo.id]);
