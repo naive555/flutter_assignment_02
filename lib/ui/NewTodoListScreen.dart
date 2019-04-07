@@ -11,13 +11,13 @@ class NewTodoListScreen extends StatefulWidget {
 class NewTodoListState extends State<NewTodoListScreen>{
   final _formkey = GlobalKey<FormState>();
   final textController = TextEditingController();
-  TodoProvider db = TodoProvider();
+  TodoProvider provider = TodoProvider();
 
    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New Subject"),
+        title: Text('New Subject'),
       ),
       body: Form(
         key: _formkey,
@@ -39,13 +39,12 @@ class NewTodoListState extends State<NewTodoListScreen>{
               child: Text('Save'),
               onPressed: () async {
                 _formkey.currentState.validate();
-                if (textController.text.length > 0) {             
-                  await db.open("todo.db");
+                if (textController.text.length > 0) {
+                  await provider.open('todo.db');
                   Todo todo = Todo();
                   todo.title = textController.text;
                   todo.done = false;
-                  await db.insert(todo);
-                  print(todo);
+                  await provider.insert(todo);
                   Navigator.pop(context);
                 }
               },

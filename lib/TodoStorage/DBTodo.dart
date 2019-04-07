@@ -13,7 +13,7 @@ class Todo {
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       columnTitle: title,
-      columnDone: done
+      columnDone: done == true ? 1 : 0
     };
     if(id != null) {
       map[columnId] = id;
@@ -76,12 +76,6 @@ class TodoProvider {
   Future<void> deleteAllDone() async{
     await db.delete(tableTodo,
     where: '$columnDone = 1');
-  }
-
-  Future<int> delete(int id) async{
-    return await db.delete(tableTodo,
-        where: "$columnId = ?",
-        whereArgs: [id]);
   }
 
   Future<int> update(Todo todo) async{
