@@ -21,7 +21,7 @@ class Todo {
     return map;
   }
 
-  Todo({this.id, this.title, this.done});
+  Todo();
 
   Todo.fromMap(Map<String, dynamic> map) {
     id = map[columnId];
@@ -53,7 +53,7 @@ class TodoProvider {
   Future<Todo> getTodo(int id) async{
     List<Map> maps = await db.query(tableTodo,
         columns: [columnId, columnDone, columnTitle],
-        where: "$columnId = ?",
+        where: '$columnId = ?',
         whereArgs: [id]);
     if(maps.length > 0){
       return new Todo.fromMap(maps.first);
@@ -80,7 +80,7 @@ class TodoProvider {
 
   Future<int> update(Todo todo) async{
     return await db.update(tableTodo, todo.toMap(),
-      where: "$columnId = ?",
+      where: '$columnId = ?',
       whereArgs: [todo.id]);
   }
 

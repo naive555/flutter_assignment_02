@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_assignment_02/TodoStorage/DBTodo.dart';
+import 'package:flutter_assignment_02/Model/DBTodo.dart';
 
 class NewTodoListScreen extends StatefulWidget {
   @override

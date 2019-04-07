@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_assignment_02/TodoStorage/DBTodo.dart';
+import 'package:flutter_assignment_02/Model/DBTodo.dart';
 
 class TodoScreen extends StatefulWidget {
  @override
@@ -55,9 +55,9 @@ class _TodoState extends State<TodoScreen> {
         ]
       ),
       body: Center(
-          child: tabIndex == 0 ? 
-            todoCount > 0 ?
-              ListView.builder(
+          child: tabIndex == 0
+          ? todoCount > 0
+          ? ListView.builder(
                 itemCount: todoCount,
                 itemBuilder: (context, int index) {
                   return Column(
